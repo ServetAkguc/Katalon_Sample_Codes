@@ -1,0 +1,21 @@
+
+WebDriver driver = DriverFactory.getWebDriver()
+
+'Loop through the lane to find Destination terminal lane'
+def rows = driver.findElements(By.xpath('//table[@class="table-striped"]/tbody/tr'))
+//List<WebElement> rows = WebUiCommonHelper.findWebElements(findTestObject('path/to/rows/object'))
+
+'To calculate number of rows in table'
+for(WebElement row : rows) {
+	rowCount++
+    terminal = driver.findElement(By.xpath('//table[@class="table table-striped"]/tbody/tr[' + rowCount + ']/td/div/a/div/h4')).getText()
+
+    if (terminal == dispatch) {
+        'Expand Dispatch Terminal lane'
+		driver.findElement(By.xpath('//table[@class="table table-striped"]/tbody/tr[' + rowCount + ']/td[1]/div/a/div[1]/h4//span')).click()
+		
+		break
+    }
+}
+
+WebUI.verifyEqual(terminal, dispatch)
